@@ -152,13 +152,13 @@ class PushshiftAPIMinimal(object):
 
     def _add_nec_args(self, payload):
         """Adds 'limit' and 'created_utc' arguments to the payload as necessary."""
+        if 'metadata' not in payload:
+            payload['metadata'] = 'true'
         if self._limited(payload):
             # Do nothing I guess? Not sure how paging works on this endpoint...
             return
         if 'limit' not in payload:
             payload['limit'] = self.max_results_per_request
-        if 'metadata' not in payload:
-            payload['metadata'] = 'true'
         if 'sort' not in payload:
             # Getting weird results if this is not made explicit. Unclear why.
             payload['sort'] = 'desc'
